@@ -52,19 +52,7 @@ if (domain.indexOf('.br') === -1) {
   process.exit(1);
 }
 
-// necessário para url#parse
-if (!domain.startsWith('http://')) {
-  domain = 'http://' + domain;
-}
-
-uri = url.parse(domain);
-if (uri && !uri.hostname) {
-  console.log(chalk.red('Por favor, digite uma url válida.'));
-  process.exit(1);
-}
-
-// possível issue de problemas com subdominio #dumbUser
-hostname = uri.hostname.substr(0, uri.hostname.indexOf('.'));
+hostname = domain.substr(0, domain.indexOf('.'));
 
 if (hostname.length < 2 || hostname.length > 26) {
   console.log(chalk.red('O Hostname deve ter no mínimo de 2 e máximo de 26 caracteres.'));
@@ -81,8 +69,9 @@ if (parseInt(hostname) == hostname) {
   process.exit(1);
 }
 
-if (!hostname.match(/[a-z0-9àáâãéêíóôõúüç]/)) {
-  console.log(chalk.red('O Hostname deve ser A-Z, 0-9, hífen e os segucaracteres acentuados: .'));
+var match = hostname.match(/([a-z0-9àáâãéêíóôõúüç])/);
+if (!match || match.length > 1) {
+  console.log(chalk.red('O Hostname deve ser a-z, 0-9, hífen e os seguintes caracteres acentuados: à, á, â, ã, é, ê, í, ó, ô, õ, ú, ü, ç.'));
   process.exit(1);
 }
 

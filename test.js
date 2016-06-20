@@ -33,18 +33,22 @@ test('deve retornar uma exceção quando a extensão se o tamanho for maior que 
   t.throws(execa('./cli.js', [url]), /O Hostname deve ter no mínimo de 2 e máximo de 26 caracteres./);
 });
 
-test('deve retornar uma exceção quando a url terminar com hífen', t => {
+test('deve retornar uma exceção quando a hostname terminar com hífen', t => {
   t.throws(execa('./cli.js', ['test-.com.br']), /O Hostname não deve conter hífen no ínicio ou final./);
 });
 
-test('deve retornar uma exceção quando a url iniciar com hífen', t => {
+test('deve retornar uma exceção quando o hostname conter apenas números', t => {
+  t.throws(execa('./cli.js', ['32132123.com.br']), /O Hostname não deve conter apenas números./);
+});
+
+test('deve retornar uma exceção quando o hostname conter caracteres inválidos', t => {
+  t.throws(execa('./cli.js', ['te$t.com.br']), /O Hostname deve ser a-z, 0-9, hífen e os seguintes caracteres acentuados: à, á, â, ã, é, ê, í, ó, ô, õ, ú, ü, ç./);
+});
+
+test('deve retornar uma exceção quando a hostname iniciar com hífen', t => {
   t.throws(execa('./cli.js', ['-test.com.br']), /O Hostname não deve conter hífen no ínicio ou final./);
 });
 
 test('deve retornar uma exceção quando a url é inválida', t => {
   t.throws(execa('./cli.js'), /Por favor, digite uma url válida./);
-});
-
-test('deve retornar uma exceção quando a url é inválida (caracter invalido)', t => {
-  t.throws(execa('./cli.js', ['$$$.com.br']), /Por favor, digite uma url válida./);
 });
