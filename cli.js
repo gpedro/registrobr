@@ -51,7 +51,6 @@ if (domain.indexOf('.br') === -1) {
   console.log(chalk.red('A url informada deve possuir a extensão .br'));
   process.exit(1);
 }
-
 hostname = domain.substr(0, domain.indexOf('.'));
 
 if (hostname.length < 2 || hostname.length > 26) {
@@ -69,8 +68,14 @@ if (parseInt(hostname) == hostname) {
   process.exit(1);
 }
 
-var match = hostname.match(/([a-z0-9àáâãéêíóôõúüç])/);
-if (!match || match.length > 1) {
+var regex = /([a-z0-9àáâãéêíóôõúüç]+)/g;
+var matches;
+var groups = 0;
+while (matches = regex.exec(hostname)) {
+  groups++;
+}
+
+if (groups > 1) {
   console.log(chalk.red('O Hostname deve ser a-z, 0-9, hífen e os seguintes caracteres acentuados: à, á, â, ã, é, ê, í, ó, ô, õ, ú, ü, ç.'));
   process.exit(1);
 }
