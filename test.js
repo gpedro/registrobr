@@ -20,10 +20,31 @@ test('testando domínio com palavras reservadas', t => {
   });
 });
 
-test('deve retornar uma exceção quando a extensão é inválida', t => {
+test('deve retornar uma exceção quando a extensão não tiver .br', t => {
   t.throws(execa('./cli.js', ['test.com']), /A url informada deve possuir a extensão .br/);
+});
+
+test('deve retornar uma exceção quando a extensão se o tamanho for menor de dois caracteres', t => {
+  t.throws(execa('./cli.js', ['a.com.br']), /O Hostname deve ter no mínimo de 2 e máximo de 26 caracteres./);
+});
+
+test('deve retornar uma exceção quando a extensão se o tamanho for maior que 26 caracteres', t => {
+  const url = 'a'.repeat(27) + '.com.br';
+  t.throws(execa('./cli.js', [url]), /O Hostname deve ter no mínimo de 2 e máximo de 26 caracteres./);
+});
+
+test('deve retornar uma exceção quando a url terminar com hífen', t => {
+  t.throws(execa('./cli.js', ['test-.com.br']), /O Hostname não deve conter hífen no ínicio ou final./);
+});
+
+test('deve retornar uma exceção quando a url iniciar com hífen', t => {
+  t.throws(execa('./cli.js', ['-test.com.br']), /O Hostname não deve conter hífen no ínicio ou final./);
 });
 
 test('deve retornar uma exceção quando a url é inválida', t => {
   t.throws(execa('./cli.js'), /Por favor, digite uma url válida./);
+});
+
+test('deve retornar uma exceção quando a url é inválida (caracter invalido)', t => {
+  t.throws(execa('./cli.js', ['$$$.com.br']), /Por favor, digite uma url válida./);
 });
