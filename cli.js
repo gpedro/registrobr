@@ -7,13 +7,6 @@ const dns = require('dns');
 const url = require('url');
 var domain = process.argv[2] || '';
 
-const regras = [
-  'Tamanho mínimo de 2 e máximo de 26 caracteres, não incluindo a categoria. Por exemplo: no domínio xxxx.com.br, esta limitação se refere ao xxxx;',
-  'Caracteres válidos são letras de "a" a "z", números de "0" a "9", o hífen, e os seguintes caracteres acentuados: à, á, â, ã, é, ê, í, ó, ô, õ, ú, ü, ç',
-  'Não conter somente números;',
-  'Não iniciar ou terminar por hífen.'
-];
-
 function parse(data) {
   if (data.available) {
     console.log(chalk.green(`Domínio ${chalk.bold(data.fqdn)} está disponível`));
