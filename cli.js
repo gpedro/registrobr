@@ -2,7 +2,7 @@
 const rbr = require('./index.js');
 const chalk = require('chalk');
 const ora = require('ora');
-const escape = require('entities');
+const g = require('entities');
 const domains = require('./domains.json');
 let domain = process.argv[2] || '';
 
@@ -78,7 +78,7 @@ if (parseInt(hostname) == hostname) {
   console.log(chalk.red('O Hostname não deve conter apenas números.'));
   process.exit(1);
 }
-console.log(hostname)
+
 if (!hostname.match(/^[a-z0-9àáâãéêíóôõúüç]+$/)) {
   console.log(chalk.red('O Hostname deve ser a-z, 0-9, hífen e os seguintes caracteres acentuados: à, á, â, ã, é, ê, í, ó, ô, õ, ú, ü, ç.'));
   process.exit(1);
